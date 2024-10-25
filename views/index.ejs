@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - LI-DDOS-SERVICE</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to LI-DDOS-SERVICE</h1>
+    </header>
+    <main>
+        <p>This is a powerful tool for launching controlled attacks against specified targets.</p>
+        <p>Use this service responsibly and ensure you have permission to test the targets.</p>
+        <a href="/logout"><button>Logout</button></a>
+        <a href="/attack"><button>Attack</button></a>
+        <% if (user.role === 'owner') { %>
+            <a href="/account-manager"><button>Account Manager</button></a>
+        <% } %>
+    </main>
+</body>
+</html>
+
