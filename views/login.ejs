@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login - LI-DDOS-SERVICE</title>
+    <style>
+        /* Configuración básica */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Courier New', Courier, monospace;
+            color: #33ff33; /* Verde hacker */
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Fondo animado estilo Matrix */
+        #matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: -1;
+        }
+
+        /* Contenedor principal */
+        main {
+            background-color: rgba(0, 0, 0, 0.8); /* Fondo negro semi-transparente */
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 0 20px #33ff33;
+            width: 300px;
+            z-index: 1;
+        }
+
+        /* Título animado estilo Matrix */
+        h1 {
+            font-size: 2em;
+            color: #33ff33;
+            text-shadow: 0 0 5px #33ff33, 0 0 10px #33ff33, 0 0 15px #33ff33;
+            animation: glitch 1.5s infinite alternate;
+        }
+
+        @keyframes glitch {
+            0% { transform: skewX(0deg); }
+            20% { transform: skewX(5deg); }
+            40% { transform: skewX(-5deg); }
+            60% { transform: skewX(5deg); }
+            80% { transform: skewX(-5deg); }
+            100% { transform: skewX(0deg); }
+        }
+
+        /* Estilo de formulario */
+        form {
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #1a1a1a;
+            color: #33ff33;
+            box-shadow: inset 0 0 10px #33ff33;
+            font-size: 1em;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input:focus {
+            box-shadow: 0 0 12px #33ff33, inset 0 0 5px #33ff33;
+            outline: none;
+        }
+
+        /* Botón animado estilo Matrix */
+        button {
+            background-color: #1a1a1a;
+            color: #33ff33;
+            border: 1px solid #33ff33;
+            padding: 12px;
+            margin-top: 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 0 15px #33ff33;
+        }
+
+        button:hover {
+            background-color: #0d0d0d;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #33ff33, 0 0 25px #33ff33;
+        }
+
+    </style>
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    <main>
+        <h1>Login</h1>
+        <form action="/login" method="POST">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </main>
+
+    <script>
+        // Script para animación estilo Matrix
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = '0123456789ABCDEF';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#33ff33';
+            ctx.font = `${fontSize}px monospace`;
+
+            drops.forEach((y, index) => {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                const x = index * fontSize;
+                ctx.fillText(text, x, y * fontSize);
+
+                if (y * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[index] = 0;
+                }
+                drops[index]++;
+            });
+        }
+
+        setInterval(drawMatrix, 50);
+
+        // Redimensiona el canvas al cambiar el tamaño de la ventana
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
